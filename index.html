@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Estilos principales -->
+    <link rel="stylesheet" type="text/css" href="estilo/style_v1.7.css">
+
+    <!-- Meta básico -->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="description"
+        content="Descuentos exclusivos en juegos de realidad virtual para Meta Quest. Encuentra ofertas especiales, filtros personalizados y contenido detallado.">
+    <meta name="keywords"
+        content="descuentos, juegos VR, Meta Quest, realidad virtual, crossbuy, juegos en oferta, Shaak4, accesorios VR, shaak4 vr, shaak4, vr descuentos">
+    <meta name="author" content="Shaak4">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph para redes sociales -->
+    <meta property="og:title" content="Descuentos exclusivos en juegos VR | Shaak4">
+    <meta property="og:description"
+        content="Explora ofertas exclusivas en juegos y accesorios para Meta Quest. Obtén descuentos en tus títulos favoritos y accesorios.">
+    <meta property="og:image"
+        content="https://yt3.googleusercontent.com/C16Y2wCAzQKAOC_clKqh6Jt87--f1F2kRtegOeqZ223Khmbx9Iszldc2zi_3TpMnqYfR9fjuJA=w2560-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj">
+    <meta property="og:url" content="https://www.youtube.com/@Shaak4">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Shaak4 Descuentos VR">
+
+    <!-- Meta para Twitter -->
+    <meta name="x:card" content="summary_large_image">
+    <meta name="x:title" content="Descuentos exclusivos en juegos VR | Shaak4">
+    <meta name="x:description"
+        content="Explora nuestras ofertas en juegos de realidad virtual para Meta Quest. ¡Ahorra más con descuentos exclusivos!">
+    <meta name="x:image"
+        content="https://yt3.googleusercontent.com/C16Y2wCAzQKAOC_clKqh6Jt87--f1F2kRtegOeqZ223Khmbx9Iszldc2zi_3TpMnqYfR9fjuJA=w2560-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj">
+    <meta name="x:site" content="@Shaak4">
+
+    <!-- Meta para dispositivos Apple -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Descuentos VR | Shaak4">
+    <link rel="apple-touch-icon" href="imgs/favicon.png">
+
+    <!-- Favicons -->
+    <title data-lang="tituloPagina">Descuentos VR | Shaak4</title>
+    <link rel="icon" href="imgs/favicon.png" type="image/png">
+
+    <script src="scripts/script_v1.8.1.js"></script>
+
+</head>
+
+<body>
+    <div class="hero-section">
+        <video autoplay muted playsinline class="background-video">
+            <source src="imgs/kiwipromo.mp4" type="video/mp4">
+            <span data-lang="noSoportaVideo">Tu navegador no soporta video.</span>
+        </video>
+        <div class="overlay"></div>
+        <div class="language-selector">
+            <div class="language-flag selected">
+                <img src="imgs/flag-es.png" alt="Español" class="language-icon" data-lang="es" title="Español">
+            </div>
+            <div class="language-flag">
+                <img src="imgs/flag-en.png" alt="English" class="language-icon" data-lang="en" title="English">
+            </div>
+        </div>
+        <div class="hero-content">
+            <div class="brand-logo-container">
+                <a href="https://www.youtube.com/@Shaak4">
+                    <img src="imgs/shaak4_42.png" alt="Shaak4 Logo" class="brand-logo">
+                </a>
+                <h1 class="hero-title" data-lang="titulo">Bienvenidos a Shaak4 VR</h1>
+            </div>
+            <p class="hero-subtitle" data-lang="subtitulo">Explora descuentos exclusivos en juegos de Realidad Virtual.
+            </p>
+            <!-- Botones de Login y Registro -->
+            <div class="cta-container">
+                <button id="login-btn" class="cta-button" data-lang="botonSesion">Iniciar Sesión</button>
+                <button class="cta-button" onclick="scrollToSection('ofertas')" data-lang="descubreOfertas">Descubre las
+                    ofertas</button>
+                <button id="registro-btn" class="cta-secondary" data-lang="botonRegistro">Registrarse</button>
+            </div>
+
+            <div class="user-actions cta-container">
+                <div id="usuario-info" class="bienvenida-usuario" style="display: none;">
+                    <p class="bienvenida-texto"><span data-lang="bienvenido">¡Bienvenido</span>, <span
+                            id="nombre-usuario"></span>!</p>
+                    <div class="user-actions-btns">
+                        <button id="panel-usuario-btn" class="cta-button" data-lang="panelUsuario">Panel de
+                            usuario</button>
+                        <button id="admin-add-games-btn" class="cta-button" data-lang="adminAgregarJuegos">Añadir
+                            juegos</button>
+                        <button id="logout-btn" class="cta-secondary" data-lang="cerrarSesion">Cerrar sesión</button>
+                    </div>
+                </div>
+
+                <!-- Modal para añadir juegos (solo admins) -->
+                <div id="admin-add-games-modal" class="popup-container" style="display:none;z-index:1000;">
+                    <div class="popup-content">
+                        <span class="close-popup" id="close-admin-add-games">&times;</span>
+                        <h2 data-lang="adminAgregarJuegosTitulo">Añadir varios juegos</h2>
+                        <form id="admin-add-games-form" enctype="multipart/form-data">
+                            <div id="admin-games-fields"></div>
+                            <button type="button" id="add-game-field-btn" class="cta-button"
+                                data-lang="adminAgregarOtroJuego">Añadir otro juego</button>
+                            <div style="margin-top:18px;display:flex;gap:10px;">
+                                <button type="submit" class="cta-button" data-lang="adminSubirJuegos">Subir
+                                    juegos</button>
+                                <button type="button" id="cancel-admin-add-games" class="cta-button"
+                                    style="background: #e53935; margin-top: 5px;"
+                                    data-lang="panelUsuarioEliminarCancelar">Cancelar</button>
+                            </div>
+                            <div id="admin-add-games-message" class="message" style="margin-top:10px;"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Popup Login -->
+                <div id="popup-login" class="popup-container">
+                    <div class="popup-content">
+                        <span class="close-popup">&times;</span>
+                        <h2 data-lang="popupLoginTitulo">Iniciar Sesión</h2>
+                        <form id="form-login">
+                            <div class="input-group">
+                                <input type="text" id="login-email" placeholder=""
+                                    data-lang-placeholder="popupLoginEmail" maxlength="80">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="login-pass" placeholder=""
+                                    data-lang-placeholder="popupLoginPass" maxlength="20">
+                                <i class="fa fa-lock"></i>
+                            </div>
+                            <p id="login-message" class="message"></p>
+                            <button type="submit" class="cta-button" data-lang="popupLoginBoton">Ingresar</button>
+                            <button type="button" id="google-login-btn" class="cta-button google-btn"
+                                style="background:#fff;color:#444;border:1px solid #ccc;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+                                <img src="imgs/google.svg" alt="Google" style="width:22px;height:22px;"> <span
+                                    data-lang="googleLogin">Iniciar sesión con Google</span>
+                            </button>
+                            <div style="margin-top: 12px;">
+                                <a href="#" id="enlace-olvide-pass"
+                                    style="color: #3590b2; font-size: 15px; text-decoration: underline; cursor: pointer;"
+                                    data-lang="olvidePassEnlace">¿Olvidaste tu contraseña?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Popup Recuperar Contraseña -->
+                <div id="popup-recuperar" class="popup-container" style="display:none;">
+                    <div class="popup-content">
+                        <span class="close-popup">&times;</span>
+                        <h2 data-lang="olvidePassTitulo">Recuperar contraseña</h2>
+                        <form id="form-solicitar-recuperacion">
+                            <div class="input-group">
+                                <input type="text" id="recuperar-email" placeholder=""
+                                    data-lang-placeholder="olvidePassPlaceholder" style="width:100%;">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <button type="submit" class="cta-button" data-lang="olvidePassBoton">Enviar enlace</button>
+                            <div class="message" id="mensaje-olvide-pass"></div>
+                            <a href="#" id="volver-login"
+                                style="color: #888; font-size: 14px; text-decoration: underline; display:block; margin-top:10px;"
+                                data-lang="olvidePassVolver">Volver al login</a>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Popup Restablecer Contraseña -->
+                <div id="popup-restablecer" class="popup-container" style="display:none;">
+                    <div class="popup-content">
+                        <span class="close-popup">&times;</span>
+                        <h2 class="reset-title" data-lang="olvidePassTitulo">Restablecer contraseña</h2>
+                        <div class="reset-msg" data-lang="olvidePassDescripcion">Introduce tu nueva contraseña para tu
+                            cuenta Shaak4 VR.</div>
+                        <form id="form-restablecer">
+                            <div class="input-group">
+                                <input type="password" id="nueva-pass" placeholder=""
+                                    data-lang-placeholder="nuevaPassPlaceholder" minlength="6"
+                                    autocomplete="new-password">
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="confirmar-pass" placeholder=""
+                                    data-lang-placeholder="confirmarPassPlaceholder" minlength="6"
+                                    autocomplete="new-password">
+                            </div>
+                            <button type="submit" class="cta-button" data-lang="guardarPassBoton">Guardar
+                                contraseña</button>
+                            <div class="message" id="reset-message"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Popup Registro -->
+                <div id="popup-registro" class="popup-container">
+                    <div class="popup-content">
+                        <span class="close-popup">&times;</span>
+                        <h2 data-lang="popupRegistroTitulo">Registrarse</h2>
+                        <form id="form-registro">
+                            <div class="input-group">
+                                <input type="text" id="registro-nombre" placeholder=""
+                                    data-lang-placeholder="popupRegistroNombre" maxlength="50">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="registro-email" placeholder=""
+                                    data-lang-placeholder="popupRegistroEmail" maxlength="80">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="registro-pass" placeholder=""
+                                    data-lang-placeholder="popupRegistroPass" maxlength="20">
+                                <i class="fa fa-lock"></i>
+                            </div>
+                            <p id="registro-message" class="message"></p>
+                            <button type="submit" class="cta-button" data-lang="popupRegistroBoton">Crear
+                                Cuenta</button>
+                            <button type="button" id="google-register-btn" class="cta-button google-btn"
+                                style="background:#fff;color:#444;border:1px solid #ccc;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+                                <img src="imgs/google.svg" alt="Google" style="width:22px;height:22px;"> <span
+                                    data-lang="googleRegister">Registrarse con Google</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Popup Desvincular Google -->
+                <div id="popup-desvincular-google" class="popup-container" style="display:none;">
+                    <div class="popup-content">
+                        <span class="close-popup">&times;</span>
+                        <h2 data-lang="desvincularGoogleTitulo">Establecer nueva contraseña</h2>
+                        <form id="form-desvincular-google">
+                            <div class="input-group">
+                                <input type="password" id="nueva-pass-desvincular" placeholder=""
+                                    data-lang-placeholder="nuevaPassPlaceholder" minlength="6"
+                                    autocomplete="new-password">
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="nueva-pass2-desvincular" placeholder=""
+                                    data-lang-placeholder="confirmarPassPlaceholder" minlength="6"
+                                    autocomplete="new-password">
+                            </div>
+                            <p id="msg-desvincular-google" class="message"></p>
+                            <button type="submit" class="cta-button" data-lang="desvincularGoogleConfirmar">Desvincular
+                                y guardar nueva contraseña</button>
+                            <button type="button" id="cancelar-desvincular-google" class="cta-secondary"
+                                style="background: #e53935; margin-top: 5px;"
+                                data-lang="panelUsuarioEliminarCancelar">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Popup Panel Usuario -->
+                <div id="popup-panel-usuario" class="popup-container" style="display:none;">
+                    <div class="popup-content">
+                        <span class="close-popup">&times;</span>
+                        <h2 data-lang="panelUsuarioTitulo">Editar datos de usuario</h2>
+                        <form id="form-panel-usuario">
+                            <div class="input-group">
+                                <input type="text" id="panel-nombre" placeholder=""
+                                    data-lang-placeholder="popupRegistroNombre">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <p id="panel-usuario-message" class="message"></p>
+                            <button type="submit" class="cta-button" data-lang="panelUsuarioGuardar">Guardar
+                                cambios</button>
+                        </form>
+                        <hr style="margin: 32px 0 18px 0; border: none; border-top: 1.5px solid #eee;">
+                        <div id="panel-cambiar-pass-section">
+                            <h3 style="margin-bottom: 18px; color: #3590b2;" data-lang="cambiarPassTitulo">Cambiar
+                                contraseña</h3>
+                            <form id="form-cambiar-pass">
+                                <div class="input-group">
+                                    <input type="password" id="pass-actual" placeholder=""
+                                        data-lang-placeholder="passActualPlaceholder">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <div class="input-group">
+                                    <input type="password" id="pass-nueva" placeholder=""
+                                        data-lang-placeholder="nuevaPassPlaceholder" minlength="6">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <div class="input-group">
+                                    <input type="password" id="pass-nueva2" placeholder=""
+                                        data-lang-placeholder="confirmarPassPlaceholder" minlength="6">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <p id="panel-pass-message" class="message"></p>
+                                <button type="submit" class="cta-button" data-lang="cambiarPassBoton">Cambiar
+                                    contraseña</button>
+                            </form>
+                        </div>
+                        <hr style="margin: 32px 0 18px 0; border: none; border-top: 1.5px solid #eee;">
+                        <div id="panel-eliminar-cuenta-section">
+                            <div class="input-group">
+                                <button type="button" id="btn-google-vincular" class="cta-button google-btn"
+                                    style="background:#fff;color:#444;border:1px solid #ccc;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+                                    <img src="imgs/google.svg" alt="Google" style="width:22px;height:22px;"> <span
+                                        data-lang="vincularGoogle">Vincular a Google</span>
+                                </button>
+                            </div>
+                            <button id="btn-eliminar-cuenta" type="button" class="cta-button"
+                                style="background:#e53935;color:#fff;margin-top:10px;"
+                                data-lang="panelUsuarioEliminarTitulo">
+                                <i class="fa fa-trash"></i> <span data-lang="panelUsuarioEliminarTitulo">Eliminar
+                                    cuenta</span>
+                            </button>
+                            <form id="form-eliminar-cuenta" style="display:none; margin-top:18px;">
+                                <div class="input-group">
+                                    <input type="password" id="eliminar-cuenta-pass" placeholder="" maxlength="40"
+                                        autocomplete="current-password"
+                                        data-lang-placeholder="panelUsuarioEliminarPlaceholder">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                                <p id="eliminar-cuenta-message" class="message"></p>
+                                <button type="submit" class="cta-button" style="background:#e53935;"
+                                    data-lang="panelUsuarioEliminarConfirmar">Confirmar eliminación</button>
+                                <button type="button" id="cancelar-eliminar-cuenta" class="cta-secondary"
+                                    style="margin-left:10px;" data-lang="panelUsuarioEliminarCancelar">Cancelar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="floating-icons">
+            <a href="https://x.com/DanielShka">
+                <img src="imgs/x.png" alt="X"></a>
+
+            <a href="https://t.me/Shaak4">
+                <img src="imgs/telegram.png" alt="Telegram"></a>
+
+            <a href="https://www.instagram.com/daniel_shka">
+                <img src="imgs/instagram.png" alt="Instagram"></a>
+        </div>
+    </div>
+
+    <div class="topbar" id="ofertas">
+        <div class="topbar-header">
+            <h2 data-lang="descuentosEspeciales">Descuentos Especiales <br>(Click aquí)</h2>
+        </div>
+        <div class="topbar-content">
+            <div class="topbar-section">
+                <h3 data-lang="promocionesEspeciales">💼 Promociones Especiales</h3>
+                <p class="topbar-description" data-lang="descripcionPromociones">
+                    Accesorios imprescindibles en nuestra <a href="https://amzn.to/4ez4ZSd" target="_blank">Tienda
+                        Amazon</a>. ¡Descubre las mejores ofertas de Shaak4!
+                </p>
+                <ul class="promotions-list">
+                    <li>
+                        <span>15% en <strong>INFINITYONE3D</strong></span>
+                        <a href="https://infinityone3d.com/discount/SHAAK" target="_blank" class="topbar-action"
+                            data-lang="aplicarCodigo">Aplicar Código: <code>SHAAK</code></a>
+                    </li>
+                    <li>
+                        <span>10% en <strong>AMVR</strong></span>
+                        <a href="https://www.amvrshop.com/" target="_blank" class="topbar-action"
+                            data-lang="aplicarCodigo">Aplicar Código: <code>SHAAK4</code></a>
+                    </li>
+                    <li>
+                        <span>10% en <strong>ANNAPRO</strong></span>
+                        <a href="https://annapro.com/" target="_blank" class="topbar-action"
+                            data-lang="aplicarCodigo">Aplicar Código: <code>SHAAK4VR</code></a>
+                    </li>
+                    <li>
+                        <span>5% en <strong>KIWI</strong></span>
+                        <a href="https://annapro.com/" target="_blank" class="topbar-action"
+                            data-lang="aplicarCodigo">Aplicar Código: <code>SHAAK4</code></a>
+                    </li>
+                    <li>
+                        <span>10% en <strong>VRROCK</strong></span>
+                        <a href="https://vroptician.com/" target="_blank" class="topbar-action"
+                            data-lang="aplicarCodigo">Aplicar Código: <code>SHAAK4</code></a>
+                    </li>
+                    <li>
+                        <span>5% en <strong>VROPTICIAN</strong></span>
+                        <a href="https://vroptician.com/" target="_blank" class="topbar-action"
+                            data-lang="aplicarCodigo">Aplicar Código: <code>SHAAK4</code></a>
+                    </li>
+                    <li>
+                        <span>10% en <strong>VRCover</strong></span>
+                        <a href="https://www.kiwidesign.com/?ref=aVqq2EiI" target="_blank" class="topbar-action"
+                            data-lang="aplicarCodigo">Aplicar Código: <code>Shaak4VRQ3</code></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="topbar-section">
+                <h3 data-lang="enlacesAfiliados">🔗 Enlaces Afiliados</h3>
+                <div class="affiliate-links">
+                    <a href="https://amzn.to/48RcLUE" target="_blank" data-lang="amazon">Amazon</a>
+                    <a href="https://www.eneba.com/es/?af_id=Shaak4VR5&utm_medium=infl&utm_source=Shaak4VR5"
+                        target="_blank" data-lang="eneba">Eneba</a>
+                    <a href="https://s.click.aliexpress.com/e/_EG4qGiV" target="_blank"
+                        data-lang="aliexpress">AliExpress</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <div class="content">
+
+            <div class="container">
+                <h1 data-lang="catalogoMetaQuest">10% DESCUENTO TODO EL CATALOGO DE META QUEST</h1>
+                <h2 data-lang="accesoriosKiwi">Accesorios imprescindibles KIWI DESIGN</h2>
+                <div class="offers-container-promo">
+                    <div class="offer-card-promo">
+                        <div class="offer-image-container-promo">
+                            <img src="imgs/kiwig4.png" alt="META QUEST 3">
+                        </div>
+                        <div class="offer-info-promo">
+                            <h4>G4 PRO</h4>
+                            <p data-lang="g4Descripcion">GRIP de QUEST 3/3S para mejorar la sujeción del mando</p>
+                            <a href="https://acortar.link/G4GRIPKIWI" target="_blank" class="offer-button"
+                                data-lang="comprarAhora">Comprar ahora</a>
+                        </div>
+                    </div>
+                    <div class="offer-card-promo">
+                        <div class="offer-image-container-promo">
+                            <img src="imgs/kiwik4.png" alt="META QUEST 3S">
+                        </div>
+                        <div class="offer-info-promo">
+                            <h4>K4 BOOST</h4>
+                            <p data-lang="k4Descripcion">Strap tipo pinza de QUEST 3/3S, con CARGA RAPIDA/SIMULTANEA y
+                                LIGERO</p>
+                            <a href="https://acortar.link/4KSTRAPKIWI" target="_blank" class="offer-button"
+                                data-lang="comprarAhora">Comprar ahora</a>
+                        </div>
+                    </div>
+                    <div class="offer-card-promo">
+                        <div class="offer-image-container-promo">
+                            <img src="imgs/kiwih4.png" alt="META QUEST 3S">
+                        </div>
+                        <div class="offer-info-promo">
+                            <h4>H4 BOOST</h4>
+                            <p data-lang="h4Descripcion">Strap tipo halo de QUEST 3/3S, con CAGA RAPIDA/SIMULTANEA y
+                                EVITA PRESION de CARA</p>
+                            <a href="https://goo.su/EOPcrF" target="_blank" class="offer-button"
+                                data-lang="comprarAhora">Comprar ahora</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="info-message">
+                    <div class="info-accordion">
+                        <div class="accordion-item">
+                            <button class="accordion-button">
+                                <span data-lang="faq1Titulo">🎮 Descuento automático</span>
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="accordion-content" data-lang="faq1Texto">
+                                ✌️ <strong>Los enlaces de juegos de META QUEST facilitados aquí contendrán un 10% de
+                                    descuento</strong><br>
+                                <strong>Se aplica automáticamente aceptando el 'pop-up' que informa del
+                                    descuento</strong><br>
+                                <em>(Normalmente no es acumulable en ofertas, pero también me ayudan como creador)</em>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <button class="accordion-button">
+                                <span data-lang="faq2Titulo">🔍 Cómo buscar juegos</span>
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="accordion-content" data-lang="faq2Texto">
+                                ✅ <strong>Para encontrar el juego que quieres, usa el buscador y escribe el nombre del
+                                    juego</strong>,
+                                <strong>si no lo encuentras puedes escribirme</strong> <a
+                                    href="https://t.me/Shaak4">@Shaak4</a><br>
+                                <em>(Si no aparece el cupón de descuento, borra cookies, desactiva bloqueadores o usa el
+                                    móvil)</em>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <button class="accordion-button">
+                                <span data-lang="faq3Titulo">❤️ Soporte al canal</span>
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="accordion-content" data-lang="faq3Texto">
+                                ❤️‍🔥 <strong>Este canal informa sobre ofertas de juegos relacionados con la realidad
+                                    virtual</strong><br>
+                                <em>Los referidos aquí apoyan al canal 'Shaak4 VR'</em>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <button class="accordion-button">
+                                <span data-lang="faq4Titulo">💝 Más descuentos</span>
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="accordion-content" data-lang="faq4Texto">
+                                <strong>💝 Más descuentos en <a
+                                        href="https://t.me/descuentosmetaquest">@descuentosmetaquest</a></strong>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <button class="accordion-button">
+                                <span data-lang="faq5Titulo">💎 Promoción especial</span>
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="accordion-content" data-lang="faq5Texto">
+                                💎 <strong>Consigue 30€ de saldo si compras META QUEST con este enlace y recibe además
+                                    BATMAN VR y 3 MESES de QUEST+:</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="offers-container">
+                        <div class="offer-card">
+                            <div class="offer-image-container">
+                                <img src="imgs/metaq3.webp" alt="META QUEST 3">
+                            </div>
+                            <div class="offer-info">
+                                <h4>META QUEST 3</h4>
+                                <p data-lang="metaq3Descripcion">Consigue 30€ de saldo y más</p>
+                                <a href="https://www.meta.com/affiliates/Me8VXVyD6" target="_blank" class="offer-button"
+                                    data-lang="comprarAhora">Comprar ahora</a>
+                            </div>
+                        </div>
+                        <div class="offer-card">
+                            <div class="offer-image-container">
+                                <img src="imgs/metaq3s.webp" alt="META QUEST 3S">
+                            </div>
+                            <div class="offer-info">
+                                <h4>META QUEST 3S</h4>
+                                <p data-lang="metaq3sDescripcion">Recibe Batman VR y 3 meses Quest+</p>
+                                <a href="https://www.meta.com/affiliates/BhF96yNG8" target="_blank" class="offer-button"
+                                    data-lang="comprarAhora">Comprar ahora</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="search-container">
+                    <div class="dropdown">
+                        <button class="dropdown-button" data-lang="ordenar">Ordenar</button>
+                        <div class="dropdown-content">
+                            <button onclick="applyFilter('alphabetical')" data-lang="alfabetico">Alfabético
+                                (A-Z)</button>
+                            <button onclick="applyFilter('reverse-alphabetical')"
+                                data-lang="alfabeticoInverso">Alfabético inverso (Z-A)</button>
+                            <button onclick="applyFilter('recent')" data-lang="recientes">Recientemente
+                                añadidos</button>
+                        </div>
+                    </div>
+                    <input type="text" id="search-box" placeholder="" data-lang-placeholder="buscarJuego">
+                    <div class="filter-crossbuy-container">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="filter-crossbuy">
+                            <span class="slider"></span>
+                            <span class="label-text" data-lang="crossbuy">Crossbuy</span>
+                        </label>
+                        <span class="tooltip-icon">ℹ</span>
+                        <span class="tooltip-text" data-lang="crossbuyInfo">Con una compra juégalo tanto en PC como en
+                            Meta Quest.</span>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="filter-favoritos">
+                            <span class="slider"></span>
+                            <span class="label-text" data-lang="favoritos">Favoritos</span>
+                        </label>
+                        <select id="filtro-categoria" class="filter-select">
+                            <option value="" data-lang="Categoria">Categorías</option>
+                            <option value="Role-playing (RPG)" data-lang="RPG">RPG
+                            </option>
+                            <option value="Simulator" data-lang="Simulator">Simulación</option>
+                            <option value="Shooter" data-lang="Shooter">Shooter</option>
+                            <option value="Turn-based strategy (TBS)"
+                                data-lang="TBS">TBS</option>
+                            <option value="Adventure" data-lang="Adventure">Aventura</option>
+                            <option value="Fighting" data-lang="Fighting">Lucha</option>
+                            <option value="Music" data-lang="Music">Música</option>
+                            <option value="Platform" data-lang="Platform">Plataformas</option>
+                            <option value="Puzzle" data-lang="Puzzle">Puzle</option>
+                            <option value="Sport" data-lang="Sport">Deportes</option>
+                            <option value="Point-and-click" data-lang="Point">Point & Click
+                            </option>
+                            <option value="Strategy" data-lang="Strategy">Estrategia</option>
+                            <option value="Hack and slash/Beat 'em up"
+                                data-lang="Hack">Hack and Slash</option>
+                            <option value="Indie" data-lang="Indie">Indie</option>
+                            <option value="Pinball" data-lang="Pinball">Pinball</option>
+                            <option value="Racing" data-lang="Racing">Carreras</option>
+                            <option value="Arcade" data-lang="Arcade">Arcade</option>
+                            <option value="Card & Board Game" data-lang="Card">Cartas y
+                                tablero</option>
+                            <option value="Real Time Strategy (RTS)"
+                                data-lang-value="RTS">RTS</option>
+                            <option value="Sin categorizar" data-lang="Sin categorizar">Sin categorizar
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid">
+                    <!-- Aqui se agregan las tarjetas de videojuegos -->
+                </div>
+                <!-- Controles de paginación -->
+                <div class="pagination-container">
+                    <button id="pagination-prev" class="pagination-btn" aria-label="Anterior">&#8592;</button>
+                    <div id="pagination-pages" class="pagination-pages"></div>
+                    <button id="pagination-next" class="pagination-btn" aria-label="Siguiente">&#8594;</button>
+                    <div class="pagination-size-selector">
+                        <label for="pagination-size">Por página:</label>
+                        <select id="pagination-size">
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Popup Mensaje Global -->
+    <div id="popup-mensaje" class="popup-mensaje" style="display: none;">
+        <div class="popup-contenido">
+            <span id="popup-texto"></span>
+            <button id="cerrar-popup-mensaje" data-lang="ok">OK</button>
+        </div>
+    </div>
+    <div id="toast" class="toast" style="display: none;"></div>
+</body>
+
+</html>
